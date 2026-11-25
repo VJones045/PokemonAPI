@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Google Books API</title>
+</head>
+<body>
+
+    <h1>Pokemon List</h1>
+
+    <ul id="pokemonList"></ul>
+
+    <script>
+
+        let url = "https://pokeapi.co/api/v2/";
+        let pokemonList = document.getElementById("pokemonList");
+
+        async function fetchPokemon() {
+
+            const response = await fetch( url + "pokemon");
+            console.log(response);
+
+            const data = await response.json();
+            console.log(data);
+
+            data.results.forEach((pokemon) => {
+
+                pokemon.url = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemon.url.split("/")[6]}.png`;
+                pokemonList.innerHTML += `<li><h2>${pokemon.name}</h2>
+                       <img src="${pokemon.url}">
+                   </li>`;
+
+            });
+
+        }
+
+        fetchPokemon();
+
+    </script>
+
+</body>
+</html>
